@@ -1,0 +1,132 @@
+:root {
+  left:0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  --size: 15px;
+  --square-grid-cols: 20;
+  --square-grid-rows: 30;
+  --draw-container-dimension: 5;
+}
+body {
+  margin: 0;
+  height: 100%;
+}
+.square{
+  width: var(--size);
+  height: var(--size);
+  background-color: white;
+  border-radius: 2px;
+  opacity: 40%;
+
+}
+.square-color-1{
+  background-color: black;
+}
+.square-color-2{
+  background-color: white;
+}
+.square-color-3{
+  background-color: red;
+}
+.square-color-4{
+  background-color: orange;
+}
+.square-color-5{
+  background-color: yellow;
+}
+.square-color-6{
+  background-color: green;
+}
+.square-color-7{
+  background-color: aqua;
+}
+.square-color-8{
+  background-color: blue;
+}
+.square-color-9{
+  background-color: violet;
+}
+.square-color-10{
+  background-color: blueviolet;
+}
+.square-color-11{
+  background-color: saddlebrown;
+}
+
+.color-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+
+.color-box {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: 2px solid black;
+  cursor: pointer;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.color-box.eraser::after{
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  border-radius: 4px;
+  background-color: rgb(255, 88, 88);
+  transform: rotate(-45deg) scaleX(1.4142);
+}
+
+.color-box.selected {
+  outline: 3px solid white;
+  box-shadow: 0 0 0 2px black;
+}
+
+
+.square-sand{
+  opacity: 100%;
+}
+
+
+.container {
+  display: flex;
+  flex-flow: row;
+  gap: 20px;
+}
+.customization-container {
+  display: flex;
+  gap: 10px;
+  flex-flow: column;
+  margin: 20px;
+}
+
+.background{
+  background-image: radial-gradient(rgb(29, 40, 59), rgb(41, 33, 56));
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.square-grid{
+  display: grid;
+  grid-template-columns: repeat(var(--square-grid-cols), var(--size));
+  grid-template-rows: repeat(var(--square-grid-rows), var(--size));
+  gap: 0px;
+}
+
+.draw-container{
+  display: grid;
+  grid-template-columns: repeat(var(--draw-container-dimension), var(--size));
+  grid-template-rows: repeat(var(--draw-container-dimension), var(--size));
+  gap: 0px;
+}
