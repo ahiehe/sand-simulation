@@ -154,8 +154,7 @@ export const SandGrid: FC = () => {
 
         }
 
-
-        const intervalId = setInterval(() => {
+        const animationFrameId = requestAnimationFrame(() => {
 
             for (let row = rows.current - 2; row >= 0; row--) {
                 for (let column = columns.current - 1; column >= 0; column--) {
@@ -196,9 +195,9 @@ export const SandGrid: FC = () => {
                 }
             }
             setTick(tick+1);
-        }, 60);
+        });
 
-        return () => clearInterval(intervalId);
+        return () => cancelAnimationFrame(animationFrameId)
     }, [drawContext, setTick, tick]);
 
     return <div className="square-grid" ref={sandContainerRef}>
