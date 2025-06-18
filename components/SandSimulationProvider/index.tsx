@@ -1,6 +1,6 @@
-import type {FC, ReactNode} from "react";
+import {type FC, type ReactNode, useEffect} from "react";
 import { useRef, useState} from "react";
-import {CreateDrawCell, type DrawCell, type Mode, SandSimulationContext} from "./context";
+import {CreateDrawCell, type DrawCell, type GridSize, type Mode, SandSimulationContext} from "./context";
 import type {ISandSimulationProvider} from "./context";
 
 interface SandSimulationProviderProps {
@@ -9,10 +9,22 @@ interface SandSimulationProviderProps {
 export const SandSimulationProvider: FC<SandSimulationProviderProps> = ({children}) => {
 
     const drawMapDimension = 5;
-    const drawMap = useRef<DrawCell[][]>(Array.from({length: drawMapDimension}, () =>
-        Array.from({length: drawMapDimension}, () =>CreateDrawCell())
+
+    const [sandMapSize, setSandMapSize] = useState<GridSize>({rows: 30, columns: 20});
+    const [drawMapSize, setDrawMapSize] = useState<GridSize>({rows: drawMapDimension, columns: drawMapDimension});
+
+    const drawMap = useRef<DrawCell[][]>(Array.from({length: drawMapSize.rows}, () =>
+        Array.from({length: drawMapSize.columns}, () => CreateDrawCell())
     ));
 
+    const [mapVersion, setMapVersion] = useState(0);
+
+    useEffect(() => {
+        drawMap.current = Array.from({ length: drawMapSize.rows }, () =>
+            Array.from({ length: drawMapSize.columns }, () => CreateDrawCell())
+        );
+        setMapVersion(prev => prev +1);
+    }, [drawMapSize]);
 
 
     const [isMouseDown, setIsMouseDown] = useState(false);
@@ -22,7 +34,11 @@ export const SandSimulationProvider: FC<SandSimulationProviderProps> = ({childre
 
 
     const value: ISandSimulationProvider = {
-        drawMapDimension: drawMapDimension,
+        sandMapSize: sandMapSize,
+        setSandMapSize: setSandMapSize,
+        drawMapSize: drawMapSize,
+        setDrawMapSize: setDrawMapSize,
+        mapVersion: mapVersion,
         drawMap: drawMap,
         mode: mode,
         setMode: setMode,

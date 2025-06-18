@@ -59,7 +59,7 @@ export const DrawGrid: FC = () => {
 
     }, [drawContext, setTick, tick])
 
-    return <div className="draw-container" ref={containerRef}>
+    return <div className="draw-container" ref={containerRef} >
         {drawContext.drawMap.current.map((row, i) =>
             row.map((cell, j) => (
                 <Cell key={`${i}-${j}`}  row={i} column={j} info={cell.info} />

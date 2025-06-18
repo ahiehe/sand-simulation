@@ -21,11 +21,21 @@ export const CreateDrawCell = (): DrawCell => {
 
 export type Mode = "draw" | "eraser" | "deleteColor";
 
+export type GridSize = {
+    rows: number;
+    columns: number;
+}
+
+
 export interface ISandSimulationProvider {
+    sandMapSize: GridSize;
+    setSandMapSize: (gridSize: GridSize) => void;
+    drawMapSize: GridSize;
+    setDrawMapSize: (gridSize: GridSize) => void;
+    mapVersion: number;
     drawMap: RefObject<DrawCell[][]>;
     mode: Mode;
     setMode: (mode: Mode) => void;
-    drawMapDimension: number;
     selectedColorIndex: number;
     setSelectedColorIndex: (index: number) => void;
     isMouseDown: boolean;

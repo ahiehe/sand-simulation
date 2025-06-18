@@ -1,4 +1,4 @@
-import {type FC, useEffect, useRef, useState} from "react";
+import {type FC, useCallback, useEffect, useRef, useState} from "react";
 import {CreateDrawCell, type DrawCell} from "../SandSimulationProvider/context.ts";
 import {Cell} from "../Cell"
 import {useDrawContext} from "../../hooks/useDrawContext.ts";
@@ -9,18 +9,23 @@ export const SandGrid: FC = () => {
     const sandContainerRef = useRef<HTMLDivElement>(null);
     const [tick, setTick] = useState(0);
 
-    const rows = useRef(30);
-    const columns = useRef(20);
+    const {rows, columns} = drawContext.sandMapSize;
 
-    const sandMap = useRef<DrawCell[][]>(Array.from({length: rows.current}, () =>
-        Array.from({length: columns.current}, () => CreateDrawCell()
-        )));
+    const sandMap = useRef<DrawCell[][]>(Array.from({length: rows}, () =>
+        Array.from({length: columns}, () => CreateDrawCell()
+    )));
 
 
-    const getCellStatus = (row: number, column: number) => {
-        if (row < 0 || column < 0 || row >= rows.current || column >= columns.current) return -1;
+    const getCellStatus = useCallback((row: number, column: number) => {
+        if (row < 0 || column < 0 || row >= rows || column >= columns) return -1;
         return sandMap.current[row][column].info.status;
-    }
+    }, [rows, columns]);
+
+    useEffect(() => {
+        sandMap.current = Array.from({ length: rows }, () =>
+            Array.from({ length: columns }, () => CreateDrawCell())
+        );
+    }, [rows, columns]);
 
     useEffect(() => {
         const sandContainer = sandContainerRef.current;
@@ -67,7 +72,7 @@ export const SandGrid: FC = () => {
 
 
         const drawOnSandGrid = (row: number, column: number) => {
-            const halfDimension = Math.floor(drawContext.drawMapDimension / 2);
+            const halfDimension = Math.floor(drawContext.drawMapSize.rows / 2);
 
             switch (drawContext.mode){
                 case "draw":
@@ -138,7 +143,7 @@ export const SandGrid: FC = () => {
         }
 
 
-    }, [drawContext]);
+    }, [drawContext, getCellStatus]);
 
     useEffect(() => {
         if (!drawContext) return;
@@ -156,8 +161,8 @@ export const SandGrid: FC = () => {
 
         const animationFrameId = requestAnimationFrame(() => {
 
-            for (let row = rows.current - 2; row >= 0; row--) {
-                for (let column = columns.current - 1; column >= 0; column--) {
+            for (let row = rows - 2; row >= 0; row--) {
+                for (let column = columns - 1; column >= 0; column--) {
                     const status = getCellStatus(row, column);
                     if (status === 1) {
 
@@ -198,7 +203,7 @@ export const SandGrid: FC = () => {
         });
 
         return () => cancelAnimationFrame(animationFrameId)
-    }, [drawContext, setTick, tick]);
+    }, [drawContext, setTick, tick, getCellStatus, rows, columns]);
 
     return <div className="square-grid" ref={sandContainerRef}>
         {sandMap.current.map((row, i) =>

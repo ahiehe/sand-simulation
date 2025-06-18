@@ -3,6 +3,7 @@ import {DrawGrid} from "../DrawGrid";
 
 import {useDrawContext} from "../../hooks/useDrawContext.ts";
 import type {Mode} from "../SandSimulationProvider/context.ts";
+import {GridSizeSelector} from "../GridSizeSelector";
 
 
 export const DrawCustomizationMenu: FC = () => {
@@ -41,6 +42,8 @@ export const DrawCustomizationMenu: FC = () => {
             <option value={"deleteColor"}>delete color</option>
         </select>
 
+        <GridSizeSelector gridType={"sand"} />
+        <GridSizeSelector gridType={"draw"} />
 
     </div>
 }

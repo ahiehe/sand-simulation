@@ -4,6 +4,7 @@ import {SandSimulationContext} from "../components/SandSimulationProvider/contex
 
 export const useDrawContext = () => {
     const drawContext = useContext(SandSimulationContext);
+
     if (!drawContext) {
         throw new Error('useDrawContext must be used within SandSimulationContext');
     }
