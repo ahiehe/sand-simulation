@@ -1,41 +1,27 @@
-import {type FC, useContext, useEffect} from "react";
+import {type FC, type MouseEvent} from "react";
 import {SandGrid} from "../../components/SandGrid";
 import {DrawCustomizationMenu} from "../../components/DrawCustomizationMenu";
-import {SandSimulationContext} from "../../components/SandSimulationProvider/context.ts";
 import {FpsDisplay} from "../../components/FpsDisplay";
+import {useDrawContext} from "../../hooks/useDrawContext.ts";
 
 
 
 export const SandSimulationPage: FC = () => {
 
-    const drawContext = useContext(SandSimulationContext);
+    const drawContext = useDrawContext();
+
+    const handleMouseDown = (e: MouseEvent) => {
+        if (e.button === 0) {
+            drawContext.setIsMouseDown(true);
+        }
+    };
+
+    const handleMouseUp = () => {
+        drawContext.setIsMouseDown(false);
+    };
 
 
-    useEffect(() => {
-        if (!drawContext) return;
-
-        const handleMouseDown = (e: MouseEvent) => {
-            if (e.button === 0) {
-                drawContext.setIsMouseDown(true);
-            }
-        };
-
-        const handleMouseUp = () => {
-            drawContext.setIsMouseDown(false);
-        };
-
-        document.addEventListener("mousedown", handleMouseDown);
-        document.addEventListener("mouseup", handleMouseUp);
-
-        return () => {
-            document.removeEventListener("mousedown", handleMouseDown);
-            document.removeEventListener("mouseup", handleMouseUp);
-        };
-
-    }, [drawContext])
-
-
-    return <div className="background">
+    return <div className="background" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
         <div className="container" >
             <SandGrid />
         </div>

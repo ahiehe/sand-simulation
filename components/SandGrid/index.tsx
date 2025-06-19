@@ -1,4 +1,4 @@
-import {type FC,  useEffect, useRef, useState} from "react";
+import {type FC,  useEffect, useRef, useState, type MouseEvent} from "react";
 import {CreateDrawCell, type DrawCell} from "../SandSimulationProvider/context.ts";
 import {Cell} from "../Cell"
 import {useDrawContext} from "../../hooks/useDrawContext.ts";
@@ -7,7 +7,6 @@ import {SandEngine} from "../../SandEngine/SandEngine.ts";
 export const SandGrid: FC = () => {
 
     const drawContext = useDrawContext();
-    const sandContainerRef = useRef<HTMLDivElement>(null);
     const [tick, setTick] = useState(0);
 
     const lastTimeRef = useRef(performance.now());
@@ -19,6 +18,32 @@ export const SandGrid: FC = () => {
         Array.from({length: columns}, () => CreateDrawCell()
     )));
 
+    const engine = useRef(new SandEngine(sandMap.current));
+
+
+
+    const handleMouseOver = (e: MouseEvent) => {
+        if (!drawContext.isMouseDown || !(e.target instanceof HTMLDivElement)) return;
+        if (!e.target.classList.contains("square")) return;
+        const sandSquare = e.target;
+
+        const mapCol = parseInt(sandSquare.dataset.column || "");
+        const mapRow = parseInt(sandSquare.dataset.row || "");
+
+        engine.current.drawOnSandGrid(mapRow, mapCol, drawContext);
+    };
+
+    const handleMouseClick = (e: MouseEvent) => {
+        if (!(e.target instanceof HTMLDivElement)) return;
+        if (!e.target.classList.contains("square")) return;
+        const sandSquare = e.target;
+
+        const mapCol = parseInt(sandSquare.dataset.column || "");
+        const mapRow = parseInt(sandSquare.dataset.row || "");
+
+
+        engine.current.drawOnSandGrid(mapRow, mapCol, drawContext);
+    };
 
     useEffect(() => {
         sandMap.current = Array.from({ length: rows }, () =>
@@ -28,46 +53,15 @@ export const SandGrid: FC = () => {
     }, [rows, columns]);
 
     useEffect(() => {
-        const sandContainer = sandContainerRef.current;
 
         if (!drawContext) return;
-        if (!sandContainer) return;
 
-
-
-        const engine = new SandEngine(sandMap.current);
-
-        const handleMouseOver = (e: MouseEvent) => {
-            if (!drawContext.isMouseDown || !(e.target instanceof HTMLDivElement)) return;
-            if (!e.target.classList.contains("square")) return;
-            const sandSquare = e.target;
-
-            const mapCol = parseInt(sandSquare.dataset.column || "");
-            const mapRow = parseInt(sandSquare.dataset.row || "");
-
-            engine.drawOnSandGrid(mapRow, mapCol, drawContext);
-        };
-
-        const handleMouseClick = (e: MouseEvent) => {
-            if (!(e.target instanceof HTMLDivElement)) return;
-            if (!e.target.classList.contains("square")) return;
-            const sandSquare = e.target;
-
-            const mapCol = parseInt(sandSquare.dataset.column || "");
-            const mapRow = parseInt(sandSquare.dataset.row || "");
-
-
-            engine.drawOnSandGrid(mapRow, mapCol, drawContext);
-        };
-
-        sandContainer.addEventListener("mouseover", handleMouseOver);
-        sandContainer.addEventListener("click", handleMouseClick);
-
+        engine.current = new SandEngine(sandMap.current);
 
         let animationFrameId: number;
 
         const frame = (time: number) => {
-            engine.calculateFrame();
+            engine.current.calculateFrame();
 
             setTick(tick + 1);
 
@@ -84,15 +78,13 @@ export const SandGrid: FC = () => {
         animationFrameId = requestAnimationFrame(frame);
 
         return () => {
-            sandContainer.removeEventListener("mouseover", handleMouseOver);
-            sandContainer.removeEventListener("click", handleMouseClick);
             cancelAnimationFrame(animationFrameId)
         }
     }, [drawContext, tick, rows, columns]);
 
 
 
-    return <div className="square-grid" ref={sandContainerRef}>
+    return <div className="square-grid" onMouseOver={handleMouseOver} onClick={handleMouseClick}>
         {sandMap.current.map((row, i) =>
             row.map((cell, j) => (
                 <Cell key={`${i}-${j}`} row={i} column={j} info={cell.info} />
