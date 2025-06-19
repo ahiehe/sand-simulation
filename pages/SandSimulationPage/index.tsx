@@ -2,6 +2,7 @@ import {type FC, useContext, useEffect} from "react";
 import {SandGrid} from "../../components/SandGrid";
 import {DrawCustomizationMenu} from "../../components/DrawCustomizationMenu";
 import {SandSimulationContext} from "../../components/SandSimulationProvider/context.ts";
+import {FpsDisplay} from "../../components/FpsDisplay";
 
 
 
@@ -38,6 +39,7 @@ export const SandSimulationPage: FC = () => {
         <div className="container" >
             <SandGrid />
         </div>
+        <FpsDisplay/>
         <DrawCustomizationMenu/>
     </div>
 }

@@ -31,9 +31,11 @@ export const SandSimulationProvider: FC<SandSimulationProviderProps> = ({childre
     const [selectedColorIndex, setSelectedColorIndex] = useState(1);
     const [mode, setMode] = useState<Mode>("draw");
 
-
+    const [fpsCounter, setFpsCounter] = useState(0);
 
     const value: ISandSimulationProvider = {
+        fpsCounter: fpsCounter,
+        setFpsCounter: setFpsCounter,
         sandMapSize: sandMapSize,
         setSandMapSize: setSandMapSize,
         drawMapSize: drawMapSize,

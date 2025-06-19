@@ -28,6 +28,8 @@ export type GridSize = {
 
 
 export interface ISandSimulationProvider {
+    fpsCounter: number;
+    setFpsCounter: (fpsCounter: number) => void;
     sandMapSize: GridSize;
     setSandMapSize: (gridSize: GridSize) => void;
     drawMapSize: GridSize;

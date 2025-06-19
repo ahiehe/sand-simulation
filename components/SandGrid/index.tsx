@@ -10,6 +10,9 @@ export const SandGrid: FC = () => {
     const sandContainerRef = useRef<HTMLDivElement>(null);
     const [tick, setTick] = useState(0);
 
+    const lastTimeRef = useRef(performance.now());
+    const frameCountRef = useRef(0);
+
     const {rows, columns} = drawContext.sandMapSize;
 
     const sandMap = useRef<DrawCell[][]>(Array.from({length: rows}, () =>
@@ -61,20 +64,33 @@ export const SandGrid: FC = () => {
         sandContainer.addEventListener("click", handleMouseClick);
 
 
+        let animationFrameId: number;
 
-
-
-        const animationFrameId = requestAnimationFrame(() => {
+        const frame = (time: number) => {
             engine.calculateFrame();
-            setTick(tick+1);
-        });
+
+            setTick(tick + 1);
+
+            frameCountRef.current++;
+            if (time - lastTimeRef.current >= 1000) {
+                drawContext.setFpsCounter(frameCountRef.current);
+                frameCountRef.current = 0;
+                lastTimeRef.current = time;
+            }
+
+            animationFrameId = requestAnimationFrame(frame);
+        };
+
+        animationFrameId = requestAnimationFrame(frame);
 
         return () => {
             sandContainer.removeEventListener("mouseover", handleMouseOver);
             sandContainer.removeEventListener("click", handleMouseClick);
             cancelAnimationFrame(animationFrameId)
         }
-    }, [drawContext, setTick, tick, rows, columns]);
+    }, [drawContext, tick, rows, columns]);
+
+
 
     return <div className="square-grid" ref={sandContainerRef}>
         {sandMap.current.map((row, i) =>
