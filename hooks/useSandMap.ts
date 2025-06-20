@@ -10,10 +10,12 @@ export const useSandMap = (rows: number, columns: number) => {
         )));
 
     useEffect(() => {
-        sandMap.current = Array.from({ length: rows }, () =>
-            Array.from({ length: columns }, () => CreateDrawCell())
+        sandMap.current = Array.from({ length: rows }, (_, rowIndex) =>
+            Array.from({ length: columns }, (_, colIndex) => {
+                const existing = sandMap.current?.[rowIndex]?.[colIndex];
+                return existing?.info.status === 1 ? existing : CreateDrawCell();
+            })
         );
-
     }, [rows, columns]);
 
     return sandMap;
