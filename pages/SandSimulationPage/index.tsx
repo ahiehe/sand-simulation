@@ -21,11 +21,17 @@ export const SandSimulationPage: FC = () => {
     };
 
 
+    const handlePauseClick = () => {
+        drawContext.setIsPaused(!drawContext.isPaused)
+        console.log("pause!")
+    }
+
     return <div className="background" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
         <div className="container" >
             <SandGrid />
         </div>
         <FpsDisplay/>
+        <button style={{width: 50, height: 50}} onClick={() => handlePauseClick()}></button>
         <DrawCustomizationMenu/>
     </div>
 }

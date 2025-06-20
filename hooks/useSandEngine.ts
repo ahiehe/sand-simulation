@@ -9,17 +9,19 @@ export const useSandEngine = (sandMap: DrawCell[][]) => {
 
     const lastTimeRef = useRef(performance.now());
     const frameCountRef = useRef(0);
-    const {setFpsCounter} = useDrawContext();
+    const {setFpsCounter, isPaused} = useDrawContext();
 
     useEffect(() => {
         engine.current = new SandEngine(sandMap);
     }, [sandMap])
 
     useEffect(() => {
-        let animationFrameId: number;
 
+        let animationFrameId: number;
         const frame = (time: number) => {
-            engine.current.calculateFrame();
+
+            if (!isPaused) engine.current.calculateFrame();
+
             setTick(t => t + 1);
 
             frameCountRef.current++;
@@ -33,8 +35,10 @@ export const useSandEngine = (sandMap: DrawCell[][]) => {
         };
 
         animationFrameId = requestAnimationFrame(frame);
-        return () => cancelAnimationFrame(animationFrameId);
-    }, [setFpsCounter, sandMap]);
+        return () => {
+            cancelAnimationFrame(animationFrameId);
+        }
+    }, [setFpsCounter, sandMap, isPaused]);
 
     return engine;
 };
