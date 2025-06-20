@@ -1,20 +1,23 @@
-import {useEffect, useRef, useState, type RefObject} from "react";
+import {useEffect, useRef, useState} from "react";
 import {SandEngine} from "../SandEngine/SandEngine";
 import {type DrawCell} from "../components/SandSimulationProvider/context";
 import {useDrawContext} from "./useDrawContext.ts";
 
-export const useSandEngine = (sandMap: RefObject<DrawCell[][]>) => {
-    const engine = useRef(new SandEngine(sandMap.current));
+export const useSandEngine = (sandMap: DrawCell[][]) => {
+    const engine = useRef(new SandEngine(sandMap));
     const [, setTick] = useState(0);
 
     const lastTimeRef = useRef(performance.now());
     const frameCountRef = useRef(0);
     const drawContext = useDrawContext();
-    
+
+    useEffect(() => {
+        engine.current = new SandEngine(sandMap);
+    }, [sandMap])
 
     useEffect(() => {
         let animationFrameId: number;
-        engine.current = new SandEngine(sandMap.current);
+
         const frame = (time: number) => {
             engine.current.calculateFrame();
             setTick(t => t + 1);

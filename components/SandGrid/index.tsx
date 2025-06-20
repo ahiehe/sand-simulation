@@ -11,7 +11,7 @@ export const SandGrid: FC = () => {
     const {rows, columns} = drawContext.sandMapSize;
     const sandMap = useSandMap(rows, columns);
 
-    const engine = useSandEngine(sandMap);
+    const engine = useSandEngine(sandMap.current);
 
     const handleMouseOver = (e: MouseEvent) => {
         if (!drawContext.isMouseDown || !(e.target instanceof HTMLDivElement)) return;
