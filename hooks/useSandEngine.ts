@@ -9,7 +9,7 @@ export const useSandEngine = (sandMap: DrawCell[][]) => {
 
     const lastTimeRef = useRef(performance.now());
     const frameCountRef = useRef(0);
-    const drawContext = useDrawContext();
+    const {setFpsCounter} = useDrawContext();
 
     useEffect(() => {
         engine.current = new SandEngine(sandMap);
@@ -24,7 +24,7 @@ export const useSandEngine = (sandMap: DrawCell[][]) => {
 
             frameCountRef.current++;
             if (time - lastTimeRef.current >= 1000) {
-                drawContext.setFpsCounter(frameCountRef.current);
+                setFpsCounter(frameCountRef.current);
                 frameCountRef.current = 0;
                 lastTimeRef.current = time;
             }
@@ -34,7 +34,7 @@ export const useSandEngine = (sandMap: DrawCell[][]) => {
 
         animationFrameId = requestAnimationFrame(frame);
         return () => cancelAnimationFrame(animationFrameId);
-    }, [drawContext, sandMap]);
+    }, [setFpsCounter, sandMap]);
 
     return engine;
 };
