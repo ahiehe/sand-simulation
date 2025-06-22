@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import {Mode} from "../../types/Mode";
+import {type Mode} from "../../types/Mode";
 
 
 export interface IControlsProvider {

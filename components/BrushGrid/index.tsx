@@ -1,11 +1,11 @@
 import {type FC, useState, type MouseEvent} from "react";
 import {Cell} from "../Cell";
-import type {DrawCell} from "../../types/DrawCell.ts";
+import type {MaterialCell} from "../../types/MaterialCell.ts";
 import {useControlsContext} from "../../hooks/useControlsContext.ts";
 import {useBrushContext} from "../../hooks/useBrushContext.ts";
 
 
-export const DrawGrid: FC = () => {
+export const BrushGrid: FC = () => {
     const brushContext = useBrushContext();
     const controlsContext = useControlsContext();
     const [tick, setTick] = useState(0);
@@ -21,7 +21,7 @@ export const DrawGrid: FC = () => {
         const mapCol = parseInt(sandSquare.dataset.column || "");
         const mapRow = parseInt(sandSquare.dataset.row || "");
 
-        changeDrawMapCell(mapRow, mapCol, brushContext.selectedColorIndex);
+        changeBrushMapCell(mapRow, mapCol, brushContext.selectedColorIndex);
         setTick(tick+1);
     };
 
@@ -34,20 +34,20 @@ export const DrawGrid: FC = () => {
         const mapCol = parseInt(sandSquare.dataset.column || "");
         const mapRow = parseInt(sandSquare.dataset.row || "");
 
-        changeDrawMapCell(mapRow, mapCol, brushContext.selectedColorIndex);
+        changeBrushMapCell(mapRow, mapCol, brushContext.selectedColorIndex);
         setTick(tick+1);
     };
 
-    const changeDrawMapCell = (row: number, column: number, colorIndex: number) => {
+    const changeBrushMapCell = (row: number, column: number, colorIndex: number) => {
 
-        const currentCell: DrawCell = brushContext.drawMap.current[row][column];
+        const currentCell: MaterialCell = brushContext.brushMap.current[row][column];
         currentCell.info = colorIndex === 0 ? {status: 0, colorIndex: 0} : {status: 1, colorIndex: colorIndex};
 
     }
 
 
-    return <div className="draw-container"  onMouseOver={handleMouseOver} onClick={handleMouseClick}>
-        {brushContext.drawMap.current.map((row, i) =>
+    return <div className="brush-container"  onMouseOver={handleMouseOver} onClick={handleMouseClick}>
+        {brushContext.brushMap.current.map((row, i) =>
             row.map((cell, j) => (
                 <Cell key={`${i}-${j}`}  row={i} column={j} info={cell.info} />
             ))

@@ -1,9 +1,9 @@
 import {useEffect, useRef, useState} from "react";
 import {SandEngine} from "../SandEngine/SandEngine";
 import {useControlsContext} from "./useControlsContext.ts";
-import type {DrawCell} from "../types/DrawCell.ts";
+import type {MaterialCell} from "../types/MaterialCell.ts";
 
-export const useSandEngine = (sandMap: DrawCell[][]) => {
+export const useSandEngine = (sandMap: MaterialCell[][]) => {
     const engine = useRef(new SandEngine(sandMap));
     const [, setTick] = useState(0);
 

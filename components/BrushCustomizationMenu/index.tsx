@@ -1,5 +1,5 @@
 import {type ChangeEvent, type FC} from "react";
-import {DrawGrid} from "../DrawGrid";
+import {BrushGrid} from "../BrushGrid";
 
 import {GridSizeSelector} from "../GridSizeSelector";
 import type {Mode} from "../../types/Mode.ts";
@@ -23,7 +23,7 @@ export const DrawCustomizationMenu: FC = () => {
     const colorIndices = Array.from({length: 12}, (_, index) => index);
 
     return <div className="customization-container">
-        <DrawGrid/>
+        <BrushGrid/>
         <div id="color-selector" className="color-selector">
             {colorIndices.map((index) => (
                 <div className={`color-box square-color-${index} 
@@ -44,7 +44,7 @@ export const DrawCustomizationMenu: FC = () => {
         </select>
 
         <GridSizeSelector gridType={"sand"} />
-        <GridSizeSelector gridType={"draw"} />
+        <GridSizeSelector gridType={"brush"} />
 
     </div>
 }

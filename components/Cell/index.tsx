@@ -1,5 +1,5 @@
 import {type FC} from "react";
-import type {DrawCellInfo} from "../../types/DrawCell.ts";
+import type {DrawCellInfo} from "../../types/MaterialCell.ts";
 
 
 interface CellProps {

@@ -1,6 +1,6 @@
 import {type FC, type ReactNode, useState} from "react";
-import {ControlsContext, IControlsProvider} from "./context";
-import {Mode} from "../../types/Mode";
+import {ControlsContext, type IControlsProvider} from "./context";
+import {type Mode} from "../../types/Mode";
 
 
 

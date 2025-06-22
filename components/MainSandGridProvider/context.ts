@@ -7,10 +7,10 @@ export type GridSize = {
 }
 
 
-export interface ISandSimulationProvider {
+export interface IMainSandGridProvider {
     sandMapSize: GridSize;
     setSandMapSize: (gridSize: GridSize) => void;
 
 }
 
-export const SandSimulationContext = createContext<ISandSimulationProvider | null>(null);
+export const MainSandGridContext = createContext<IMainSandGridProvider | null>(null);

@@ -1,17 +1,19 @@
 import {type FC, type FormEvent, useState} from "react";
-import {useDrawContext} from "../../hooks/useDrawContext.ts";
+import {useMainSandGridContext} from "../../hooks/useMainSandGridContext.ts";
 import {useBrushContext} from "../../hooks/useBrushContext.ts";
 
 interface GridSizeSelectorProps {
-    gridType: "sand" | "draw";
+    gridType: "sand" | "brush";
 }
 
 export const GridSizeSelector: FC<GridSizeSelectorProps> = ({gridType}) => {
-    const [rowsAmount, setRowsAmount] = useState(gridType === "draw" ? 5 : 30);
-    const [columnsAmount, setColumnsAmount] = useState(20);
-
     const brushContext = useBrushContext();
-    const sandGridContext = useDrawContext();
+    const sandGridContext = useMainSandGridContext();
+
+    const [rowsAmount, setRowsAmount] = useState(gridType === "brush" ? brushContext.brushMapSize.rows : sandGridContext.sandMapSize.rows);
+    const [columnsAmount, setColumnsAmount] = useState(sandGridContext.sandMapSize.columns);
+
+
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -20,9 +22,9 @@ export const GridSizeSelector: FC<GridSizeSelectorProps> = ({gridType}) => {
 
 
         switch (gridType){
-            case "draw":
-                root.style.setProperty('--draw-container-dimension', rowsAmount.toString());
-                brushContext.setDrawMapSize({rows: rowsAmount, columns: rowsAmount});
+            case "brush":
+                root.style.setProperty('--brush-container-dimension', rowsAmount.toString());
+                brushContext.setBrushMapSize({rows: rowsAmount, columns: rowsAmount});
                 break;
             case "sand":
                 root.style.setProperty('--square-grid-rows', rowsAmount.toString());

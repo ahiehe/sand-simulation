@@ -1,6 +1,6 @@
 import {type FC, type ReactNode, useState} from "react";
 import {type IBrushProvider, BrushContext} from "./context";
-import type {GridSize} from "../SandSimulationProvider/context";
+import type {GridSize} from "../MainSandGridProvider/context";
 import {useSandMap} from "../../hooks/useSandMap";
 
 
@@ -12,15 +12,15 @@ interface BrushProviderProps {
 
 export const BrushProvider: FC<BrushProviderProps> = ({children}) => {
 
-    const drawMapDimension = 5;
-    const [drawMapSize, setDrawMapSize] = useState<GridSize>({rows: drawMapDimension, columns: drawMapDimension});
-    const drawMap = useSandMap(drawMapSize.rows, drawMapSize.columns);
+    const brushMapDimension = 5;
+    const [brushMapSize, setBrushMapSize] = useState<GridSize>({rows: brushMapDimension, columns: brushMapDimension});
+    const brushMap = useSandMap(brushMapSize.rows, brushMapSize.columns);
     const [selectedColorIndex, setSelectedColorIndex] = useState(1);
 
     const value: IBrushProvider = {
-        drawMapSize: drawMapSize,
-        setDrawMapSize: setDrawMapSize,
-        drawMap: drawMap,
+        brushMapSize: brushMapSize,
+        setBrushMapSize: setBrushMapSize,
+        brushMap: brushMap,
         selectedColorIndex: selectedColorIndex,
         setSelectedColorIndex: setSelectedColorIndex
     }

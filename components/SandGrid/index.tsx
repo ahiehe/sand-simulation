@@ -3,12 +3,12 @@ import {Cell} from "../Cell"
 import {useSandMap} from "../../hooks/useSandMap.ts";
 import {useSandEngine} from "../../hooks/useSandEngine.ts";
 import {useControlsContext} from "../../hooks/useControlsContext.ts";
-import {useDrawContext} from "../../hooks/useDrawContext.ts";
+import {useMainSandGridContext} from "../../hooks/useMainSandGridContext.ts";
 import {useBrushContext} from "../../hooks/useBrushContext.ts";
 
 export const SandGrid: FC = () => {
     const controlsContext = useControlsContext();
-    const sandGridContext = useDrawContext();
+    const sandGridContext = useMainSandGridContext();
     const brushContext = useBrushContext();
 
     const {rows, columns} = sandGridContext.sandMapSize;

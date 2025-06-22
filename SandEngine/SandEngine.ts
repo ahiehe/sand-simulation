@@ -1,14 +1,14 @@
-import type {DrawCell} from "../types/DrawCell.ts";
+import type {MaterialCell} from "../types/MaterialCell.ts";
 import type {IBrushProvider} from "../components/BrushProvider/context.ts";
 import type {IControlsProvider} from "../components/ControlsProvider/context.ts";
 
 
 export class SandEngine{
-    private sandMap: DrawCell[][];
+    private sandMap: MaterialCell[][];
     private rows: number;
     private columns: number;
 
-    constructor(sandMap: DrawCell[][]) {
+    constructor(sandMap: MaterialCell[][]) {
         this.sandMap = sandMap;
         this.rows = sandMap.length;
         this.columns = sandMap[0].length;
@@ -20,11 +20,11 @@ export class SandEngine{
     }
 
 
-    private cloneSandOnMap (currentGridCell: DrawCell, newGridCell: DrawCell) {
+    private cloneSandOnMap (currentGridCell: MaterialCell, newGridCell: MaterialCell) {
         newGridCell.info = {...currentGridCell.info};
     }
 
-    private removeSandFromMap (currentGridCell: DrawCell) {
+    private removeSandFromMap (currentGridCell: MaterialCell) {
         currentGridCell.info = {status: 0, colorIndex: 0};
     }
 
@@ -65,13 +65,13 @@ export class SandEngine{
     }
 
     public drawOnSandGrid  (row: number, column: number, brushContext: IBrushProvider, controlsContext: IControlsProvider) {
-        const halfDimension = Math.floor(brushContext.drawMapSize.rows / 2);
+        const halfDimension = Math.floor(brushContext.brushMapSize.rows / 2);
 
         switch (controlsContext.mode){
             case "draw":
                 for (let i = -1 * halfDimension; i <= halfDimension; i++) {
                     for (let j = -1 * halfDimension; j <= halfDimension; j++) {
-                        if (brushContext.drawMap.current[i + halfDimension][j + halfDimension].info.status === 1 &&
+                        if (brushContext.brushMap.current[i + halfDimension][j + halfDimension].info.status === 1 &&
                             (this.getCellStatus(row + i, column + j) === 1 || this.getCellStatus(row + i, column + j) === -1)) {
                             return;
                         }
@@ -80,8 +80,8 @@ export class SandEngine{
                 }
                 for (let i = -1 * halfDimension; i <= halfDimension; i++) {
                     for (let j = -1 * halfDimension; j <= halfDimension; j++) {
-                        if (brushContext.drawMap.current[i + halfDimension][j + halfDimension].info.status === 1) {
-                            this.cloneSandOnMap(brushContext.drawMap.current[i + halfDimension][j + halfDimension], this.sandMap[row + i][column + j]);
+                        if (brushContext.brushMap.current[i + halfDimension][j + halfDimension].info.status === 1) {
+                            this.cloneSandOnMap(brushContext.brushMap.current[i + halfDimension][j + halfDimension], this.sandMap[row + i][column + j]);
                         }
 
                     }
@@ -91,7 +91,7 @@ export class SandEngine{
             case "eraser":
                 for (let i = -1 * halfDimension; i <= halfDimension; i++) {
                     for (let j = -1 * halfDimension; j <= halfDimension; j++) {
-                        if (this.getCellStatus(row + i, column + j) === 1 && brushContext.drawMap.current[i + halfDimension][j + halfDimension].info.status === 1) {
+                        if (this.getCellStatus(row + i, column + j) === 1 && brushContext.brushMap.current[i + halfDimension][j + halfDimension].info.status === 1) {
                             this.removeSandFromMap(this.sandMap[row + i][column + j]);
                         }
 

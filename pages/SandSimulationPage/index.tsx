@@ -1,6 +1,6 @@
 import {type FC, type MouseEvent} from "react";
 import {SandGrid} from "../../components/SandGrid";
-import {DrawCustomizationMenu} from "../../components/DrawCustomizationMenu";
+import {DrawCustomizationMenu} from "../../components/BrushCustomizationMenu";
 import {FpsDisplay} from "../../components/FpsDisplay";
 import {useControlsContext} from "../../hooks/useControlsContext.ts";
 

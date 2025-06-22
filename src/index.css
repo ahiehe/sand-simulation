@@ -6,7 +6,7 @@
   --size: 15px;
   --square-grid-cols: 20;
   --square-grid-rows: 30;
-  --draw-container-dimension: 5;
+  --brush-container-dimension: 5;
 }
 body {
   margin: 0;
@@ -124,9 +124,9 @@ body {
   gap: 0px;
 }
 
-.draw-container{
+.brush-container{
   display: grid;
-  grid-template-columns: repeat(var(--draw-container-dimension), var(--size));
-  grid-template-rows: repeat(var(--draw-container-dimension), var(--size));
+  grid-template-columns: repeat(var(--brush-container-dimension), var(--size));
+  grid-template-rows: repeat(var(--brush-container-dimension), var(--size));
   gap: 0px;
 }

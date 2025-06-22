@@ -1,12 +1,12 @@
 import {createContext, type RefObject} from "react";
-import type {DrawCell} from "../../types/DrawCell";
-import type {GridSize} from "../SandSimulationProvider/context";
+import type {MaterialCell} from "../../types/MaterialCell.ts";
+import type {GridSize} from "../MainSandGridProvider/context";
 
 
 export interface IBrushProvider {
-    drawMapSize: GridSize;
-    setDrawMapSize: (gridSize: GridSize) => void;
-    drawMap: RefObject<DrawCell[][]>;
+    brushMapSize: GridSize;
+    setBrushMapSize: (gridSize: GridSize) => void;
+    brushMap: RefObject<MaterialCell[][]>;
     selectedColorIndex: number;
     setSelectedColorIndex: (index: number) => void;
 

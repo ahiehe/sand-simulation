@@ -2,11 +2,11 @@ export type DrawCellInfo = {
     status: number;
     colorIndex: number;
 }
-export type DrawCell = {
+export type MaterialCell = {
     info: DrawCellInfo;
 }
 
-export const CreateDrawCell = (): DrawCell => {
+export const CreateMaterialCell = (): MaterialCell => {
     return {
         info: {
             status: 0,
