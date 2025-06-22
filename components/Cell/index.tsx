@@ -1,5 +1,5 @@
 import {type FC} from "react";
-import type {DrawCellInfo} from "../SandSimulationProvider/context.ts";
+import type {DrawCellInfo} from "../../types/DrawCell.ts";
 
 
 interface CellProps {

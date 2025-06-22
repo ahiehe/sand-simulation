@@ -1,11 +1,11 @@
 import {type FC} from "react";
-import {useDrawContext} from "../../hooks/useDrawContext";
+import {useControlsContext} from "../../hooks/useControlsContext.ts";
 
 
 export const FpsDisplay: FC = () => {
-    const drawContext = useDrawContext();
+    const controlsContext = useControlsContext();
 
     return <div>
-        FPS: {drawContext.fpsCounter}
+        FPS: {controlsContext.fpsCounter}
     </div>
 }

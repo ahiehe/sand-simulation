@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {SandEngine} from "../SandEngine/SandEngine";
-import {type DrawCell} from "../components/SandSimulationProvider/context";
-import {useDrawContext} from "./useDrawContext.ts";
+import {useControlsContext} from "./useControlsContext.ts";
+import type {DrawCell} from "../types/DrawCell.ts";
 
 export const useSandEngine = (sandMap: DrawCell[][]) => {
     const engine = useRef(new SandEngine(sandMap));
@@ -9,7 +9,7 @@ export const useSandEngine = (sandMap: DrawCell[][]) => {
 
     const lastTimeRef = useRef(performance.now());
     const frameCountRef = useRef(0);
-    const {setFpsCounter, isPaused} = useDrawContext();
+    const {setFpsCounter, isPaused} = useControlsContext();
 
     useEffect(() => {
         engine.current = new SandEngine(sandMap);

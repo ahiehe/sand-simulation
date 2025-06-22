@@ -1,6 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import {CreateDrawCell, type DrawCell} from "../components/SandSimulationProvider/context";
-
+import {CreateDrawCell, type DrawCell} from "../types/DrawCell.ts";
 
 
 export const useSandMap = (rows: number, columns: number) => {

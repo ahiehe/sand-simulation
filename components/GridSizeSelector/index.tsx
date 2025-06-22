@@ -1,5 +1,6 @@
 import {type FC, type FormEvent, useState} from "react";
 import {useDrawContext} from "../../hooks/useDrawContext.ts";
+import {useBrushContext} from "../../hooks/useBrushContext.ts";
 
 interface GridSizeSelectorProps {
     gridType: "sand" | "draw";
@@ -9,7 +10,8 @@ export const GridSizeSelector: FC<GridSizeSelectorProps> = ({gridType}) => {
     const [rowsAmount, setRowsAmount] = useState(gridType === "draw" ? 5 : 30);
     const [columnsAmount, setColumnsAmount] = useState(20);
 
-    const drawContext = useDrawContext();
+    const brushContext = useBrushContext();
+    const sandGridContext = useDrawContext();
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -20,12 +22,12 @@ export const GridSizeSelector: FC<GridSizeSelectorProps> = ({gridType}) => {
         switch (gridType){
             case "draw":
                 root.style.setProperty('--draw-container-dimension', rowsAmount.toString());
-                drawContext.setDrawMapSize({rows: rowsAmount, columns: rowsAmount});
+                brushContext.setDrawMapSize({rows: rowsAmount, columns: rowsAmount});
                 break;
             case "sand":
                 root.style.setProperty('--square-grid-rows', rowsAmount.toString());
                 root.style.setProperty('--square-grid-cols', columnsAmount.toString());
-                drawContext.setSandMapSize({rows: rowsAmount, columns: columnsAmount});
+                sandGridContext.setSandMapSize({rows: rowsAmount, columns: columnsAmount});
                 break;
         }
     }

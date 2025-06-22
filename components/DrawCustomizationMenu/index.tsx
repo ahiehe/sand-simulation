@@ -1,22 +1,23 @@
 import {type ChangeEvent, type FC} from "react";
 import {DrawGrid} from "../DrawGrid";
 
-import {useDrawContext} from "../../hooks/useDrawContext.ts";
-import type {Mode} from "../SandSimulationProvider/context.ts";
 import {GridSizeSelector} from "../GridSizeSelector";
+import type {Mode} from "../../types/Mode.ts";
+import {useControlsContext} from "../../hooks/useControlsContext.ts";
+import {useBrushContext} from "../../hooks/useBrushContext.ts";
 
 
 export const DrawCustomizationMenu: FC = () => {
 
-    const drawContext = useDrawContext();
+    const brushContext = useBrushContext();
+    const controlsContext = useControlsContext();
     const handleClick = (index: number) => {
-        drawContext?.setSelectedColorIndex(index);
+        brushContext?.setSelectedColorIndex(index);
     }
 
     const changeMode = (e: ChangeEvent<HTMLSelectElement>) => {
-        const newMode = e.target.value as Mode;
-        drawContext?.setMode(newMode);
-        console.log(drawContext.mode)
+        const newMode: Mode = e.target.value as Mode;
+        controlsContext?.setMode(newMode);
     }
 
     const colorIndices = Array.from({length: 12}, (_, index) => index);
@@ -27,7 +28,7 @@ export const DrawCustomizationMenu: FC = () => {
             {colorIndices.map((index) => (
                 <div className={`color-box square-color-${index} 
                                 ${index === 0 ? "eraser" : ""} 
-                                ${drawContext?.selectedColorIndex === index ? "selected" : ""}`}
+                                ${brushContext?.selectedColorIndex === index ? "selected" : ""}`}
                      onClick={() => handleClick(index)}
                      key={index}
                 >
