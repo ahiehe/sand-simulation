@@ -8,7 +8,7 @@ interface MainSandGridProviderProps {
 }
 
 export const MainSandGridProvider: FC<MainSandGridProviderProps> = ({children}) => {
-    const [sandMapSize, setSandMapSize] = useState<GridSize>({rows: 30, columns: 20});
+    const [sandMapSize, setSandMapSize] = useState<GridSize>({rows: 100, columns: 100});
 
 
 
