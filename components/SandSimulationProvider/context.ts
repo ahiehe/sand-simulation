@@ -36,7 +36,6 @@ export interface ISandSimulationProvider {
     setSandMapSize: (gridSize: GridSize) => void;
     drawMapSize: GridSize;
     setDrawMapSize: (gridSize: GridSize) => void;
-    mapVersion: number;
     drawMap: RefObject<DrawCell[][]>;
     mode: Mode;
     setMode: (mode: Mode) => void;
