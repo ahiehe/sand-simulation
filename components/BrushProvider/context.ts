@@ -9,7 +9,8 @@ export interface IBrushProvider {
     brushMap: RefObject<MaterialCell[][]>;
     selectedColorIndex: number;
     setSelectedColorIndex: (index: number) => void;
-
+    colors: string[];
+    setColors: (colors: string[]) => void;
 }
 
 export const BrushContext = createContext<IBrushProvider | null>(null);

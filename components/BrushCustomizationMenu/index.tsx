@@ -20,31 +20,31 @@ export const DrawCustomizationMenu: FC = () => {
         controlsContext?.setMode(newMode);
     }
 
-    const colorIndices = Array.from({length: 12}, (_, index) => index);
 
     return <div className="customization-container">
         <BrushGrid/>
         <div id="color-selector" className="color-selector">
-            {colorIndices.map((index) => (
-                <div className={`color-box square-color-${index} 
+                {brushContext.colors.map((color, index) => (
+                    <div className={`color-box
                                 ${index === 0 ? "eraser" : ""} 
                                 ${brushContext?.selectedColorIndex === index ? "selected" : ""}`}
-                     onClick={() => handleClick(index)}
-                     key={index}
-                >
+                         onClick={() => handleClick(index)}
+                         key={index}
+                         style={index !== 0 ? {backgroundColor: color} : {}}
+                    >
 
-                </div>
-            ))}
+                    </div>
+                ))}
+            </div>
+
+            <select onChange={(e) => changeMode(e)}>
+                <option value={"draw"}>draw</option>
+                <option value={"eraser"}>eraser</option>
+                <option value={"deleteColor"}>delete color</option>
+            </select>
+
+            <GridSizeSelector gridType={"sand"}/>
+            <GridSizeSelector gridType={"brush"}/>
+
         </div>
-
-        <select onChange={(e) => changeMode(e)}>
-            <option value={"draw"}>draw</option>
-            <option value={"eraser"}>eraser</option>
-            <option value={"deleteColor"}>delete color</option>
-        </select>
-
-        <GridSizeSelector gridType={"sand"} />
-        <GridSizeSelector gridType={"brush"} />
-
-    </div>
-}
+        }

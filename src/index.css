@@ -20,39 +20,7 @@ body {
   opacity: 40%;
 
 }
-.square-color-1{
-  background-color: black;
-}
-.square-color-2{
-  background-color: white;
-}
-.square-color-3{
-  background-color: red;
-}
-.square-color-4{
-  background-color: orange;
-}
-.square-color-5{
-  background-color: yellow;
-}
-.square-color-6{
-  background-color: green;
-}
-.square-color-7{
-  background-color: aqua;
-}
-.square-color-8{
-  background-color: blue;
-}
-.square-color-9{
-  background-color: violet;
-}
-.square-color-10{
-  background-color: blueviolet;
-}
-.square-color-11{
-  background-color: saddlebrown;
-}
+
 
 .color-selector {
   display: flex;
@@ -121,12 +89,12 @@ body {
   display: grid;
   grid-template-columns: repeat(var(--square-grid-cols), var(--size));
   grid-template-rows: repeat(var(--square-grid-rows), var(--size));
-  gap: 0px;
+  gap: 0;
 }
 
 .brush-container{
   display: grid;
   grid-template-columns: repeat(var(--brush-container-dimension), var(--size));
   grid-template-rows: repeat(var(--brush-container-dimension), var(--size));
-  gap: 0px;
+  gap: 0;
 }

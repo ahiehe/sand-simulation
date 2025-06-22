@@ -1,5 +1,5 @@
 import {type FC, useState, type MouseEvent} from "react";
-import {Cell} from "../Cell";
+import {BrushCell} from "../BrushCell";
 import type {MaterialCell} from "../../types/MaterialCell.ts";
 import {useControlsContext} from "../../hooks/useControlsContext.ts";
 import {useBrushContext} from "../../hooks/useBrushContext.ts";
@@ -49,7 +49,7 @@ export const BrushGrid: FC = () => {
     return <div className="brush-container"  onMouseOver={handleMouseOver} onClick={handleMouseClick}>
         {brushContext.brushMap.current.map((row, i) =>
             row.map((cell, j) => (
-                <Cell key={`${i}-${j}`}  row={i} column={j} info={cell.info} />
+                <BrushCell key={`${i}-${j}`}  row={i} column={j} info={cell.info} color={brushContext.colors[cell.info.colorIndex]} />
             ))
         )}
     </div>

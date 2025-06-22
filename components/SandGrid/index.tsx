@@ -30,7 +30,7 @@ export const SandGrid: FC = () => {
             for (let x = 0; x < columns; x++) {
                 const cell = sandMap.current[y][x];
                 if (cell.info.status === 1) {
-                    ctx.fillStyle = "#000000";
+                    ctx.fillStyle = brushContext.colors[cell.info.colorIndex];
                     ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 }
             }

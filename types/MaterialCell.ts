@@ -10,7 +10,7 @@ export const CreateMaterialCell = (): MaterialCell => {
     return {
         info: {
             status: 0,
-            colorIndex: 1,
+            colorIndex: 0,
         }
     }
 }

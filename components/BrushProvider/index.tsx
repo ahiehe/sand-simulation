@@ -17,12 +17,20 @@ export const BrushProvider: FC<BrushProviderProps> = ({children}) => {
     const brushMap = useSandMap(brushMapSize.rows, brushMapSize.columns);
     const [selectedColorIndex, setSelectedColorIndex] = useState(1);
 
+
+    const [colors, setColors] = useState<string[]>([
+        "#FFFFFF", "#FFFFFF", "#000000", "#FF0000", "#FFA500", "#FFFF00",
+        "#008000", "#00FFFF", "#0000FF", "#EE82EE", "#8A2BE2", "#8B4513"
+    ]);
+
     const value: IBrushProvider = {
         brushMapSize: brushMapSize,
         setBrushMapSize: setBrushMapSize,
         brushMap: brushMap,
         selectedColorIndex: selectedColorIndex,
-        setSelectedColorIndex: setSelectedColorIndex
+        setSelectedColorIndex: setSelectedColorIndex,
+        colors: colors,
+        setColors: setColors
     }
 
     return <BrushContext.Provider value={value}>

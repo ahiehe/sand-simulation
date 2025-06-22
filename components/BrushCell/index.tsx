@@ -2,16 +2,19 @@ import {type FC} from "react";
 import type {DrawCellInfo} from "../../types/MaterialCell.ts";
 
 
-interface CellProps {
+
+interface BrushCellProps {
     row: number;
     column: number;
     info: DrawCellInfo;
+    color: string
 }
 
-export const Cell: FC<CellProps> = ({row, column, info}) => {
+export const BrushCell: FC<BrushCellProps> = ({row, column, info, color}) => {
 
     return <div
-        className={`square ${info.status === 1 && "square-sand square-color-" + info.colorIndex.toString()}`}
+        className={`square ${info.status !== 0 && "square-sand"}`}
+        style={{backgroundColor: color}}
         data-row={row.toString()}
         data-column={column.toString()}>
         </div>
