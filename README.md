@@ -24,6 +24,7 @@
 
 2. Установите зависимости:
    ```bash
+   nvm install && nvm use
    npm install
    ```
 
